@@ -1,4 +1,4 @@
-
+# product.py
 class Product:
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
         """
@@ -16,7 +16,6 @@ class Product:
 
     def __str__(self):
         return f"{self.name}, {int(self.__price)} руб. Остаток: {self.quantity} шт."
-
 
     @classmethod
     def new_product(cls, params: dict, products: list = None):
@@ -47,11 +46,9 @@ class Product:
             quantity=params["quantity"]
         )
 
-
     @property
     def price(self):
         return self.__price
-
 
     @price.setter
     def price(self, value):
@@ -61,16 +58,29 @@ class Product:
         self.__price = value
 
     def __add__(self, other):
-        if isinstance(other, Product):
-            # Сложение двух продуктов возвращает сумму их цен
-            return self.price * self.quantity + other.price * other.quantity
-        else:
-            raise TypeError("Unsupported operand type for +: 'Product' and '{}'".format(type(other).__name__))
+        if type(self) is not type(other):
+            raise TypeError(f"Нельзя складывать товары разных типов: {type(self).__name__} и {type(other).__name__}")
+        return self.price * self.quantity + other.price * other.quantity
 
-    # src/category.py
-    # main.py
     @classmethod
     def get_products_string(cls, search_str: object, params: object) -> None:
         pass
 
 
+class Smartphone(Product):
+    def __init__(self, name: str, description: str, price: float, quantity: int, 
+                 efficiency: float, model: str, memory: int, color: str):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+    def __init__(self, name: str, description: str, price: float, quantity: int, 
+                 country: str, germination_period: str, color: str):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
