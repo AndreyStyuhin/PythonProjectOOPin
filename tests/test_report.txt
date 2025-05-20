@@ -1,13 +1,15 @@
 
 === Отчет о прохождении тестов ===
-Дата и время: 2025-05-15 23:22:35
+Дата и время: 2025-05-20 17:50:20
 
-Всего тестов: 12
-Успешно: 12
+Всего тестов: 14
+Успешно: 14
 Ошибок: 0
 Неудач: 0
 
 === Детали ===
+test_create_lawngrass (tests.test_product.TestProduct.test_create_lawngrass) ... ok
+test_create_smartphone (tests.test_product.TestProduct.test_create_smartphone) ... ok
 test_new_product (tests.test_product.TestProduct.test_new_product) ... ok
 test_product_initialization (tests.test_product.TestProduct.test_product_initialization) ... ok
 test_product_str (tests.test_product.TestProduct.test_product_str) ... ok
@@ -22,7 +24,7 @@ test_products_info (tests.test_category.TestCategory.test_products_info) ... ok
 test_products_info_empty (tests.test_category.TestCategory.test_products_info_empty) ... ok
 
 ----------------------------------------------------------------------
-Ran 12 tests in 0.001s
+Ran 14 tests in 0.001s
 
 OK
 

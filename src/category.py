@@ -1,6 +1,7 @@
 
 from src.product import Product
 
+
 class Category:
     # Атрибуты класса для хранения общей информации
     category_count = 0  # количество категорий
@@ -66,5 +67,3 @@ class Category:
         if product in self.__products:
             self.__products.remove(product)
             Category.product_count -= 1
-
-# category.py

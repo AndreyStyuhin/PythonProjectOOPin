@@ -1,6 +1,6 @@
 # test_product.py
 import unittest
-from src.product import Product
+from src.product import Product, Smartphone, LawnGrass
 from src.category import Category
 
 
@@ -37,3 +37,41 @@ class TestProduct(unittest.TestCase):
         product = Product("Test Product", "Test Description", 0.99, 5)
         expected_str = "Test Product, 0 руб. Остаток: 5 шт."
         self.assertEqual(str(product), expected_str)
+
+    def test_create_smartphone(self):
+        smartphone = Smartphone(
+            "Samsung Galaxy S23 Ultra",
+            "256GB, Серый цвет, 200MP камера",
+            180000.0,
+            5,
+            95.5,
+            "S23 Ultra",
+            256,
+            "Серый"
+        )
+        self.assertEqual(smartphone.name, "Samsung Galaxy S23 Ultra")
+        self.assertEqual(smartphone.description, "256GB, Серый цвет, 200MP камера")
+        self.assertEqual(smartphone.price, 180000.0)
+        self.assertEqual(smartphone.quantity, 5)
+        self.assertEqual(smartphone.efficiency, 95.5)
+        self.assertEqual(smartphone.model, "S23 Ultra")
+        self.assertEqual(smartphone.memory, 256)
+        self.assertEqual(smartphone.color, "Серый")
+
+    def test_create_lawngrass(self):
+        lawngrass = LawnGrass(
+            "Газонная трава",
+            "Элитная трава для газона",
+            500.0,
+            20,
+            "Россия",
+            "7 дней",
+            "Зеленый"
+        )
+        self.assertEqual(lawngrass.name, "Газонная трава")
+        self.assertEqual(lawngrass.description, "Элитная трава для газона")
+        self.assertEqual(lawngrass.price, 500.0)
+        self.assertEqual(lawngrass.quantity, 20)
+        self.assertEqual(lawngrass.country, "Россия")
+        self.assertEqual(lawngrass.germination_period, "7 дней")
+        self.assertEqual(lawngrass.color, "Зеленый")
