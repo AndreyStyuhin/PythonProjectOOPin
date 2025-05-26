@@ -1,6 +1,94 @@
-# product.py
-class Product:
+from abc import ABC, abstractmethod
+
+
+class CreationLoggerMixin:
+    """
+    Миксин для логирования информации о создании объекта.
+    Печатает в консоль класс объекта и переданные аргументы.
+    """
+
+    def __init__(self, *args, **kwargs):
+        """
+        Инициализация миксина. Логирует информацию о создании объекта.
+        :param args:
+        :param kwargs:
+        """
+        print(f"Создан объект класса {self.__class__.__name__} с аргументами: {args} и {kwargs}")
+        print(f"Позиционные аргументы: {args}")
+        print(f"Именованные аргументы: {kwargs}")
+        super().__init__(*args, **kwargs)
+
+    def log_info(self, message):
+        """
+        Логирует информационное сообщение.
+        :param message: сообщение для логирования
+        :return: возвращает переданное сообщение
+        """
+        print(message)
+        return message
+
+
+class BaseProduct(ABC):
+    """
+    Абстрактный базовый класс для всех типов продуктов.
+    Определяет общий интерфейс и базовую функциональность для всех продуктов.
+    """
+
+    @abstractmethod
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
+        """
+        Инициализация базового продукта
+
+        :param name: название товара
+        :param description: описание товара
+        :param price: цена товара (с копейками)
+        :param quantity: количество товара в наличии (в штуках)
+        """
+        self.name = name
+        self.description = description
+        self._price = price
+        self.quantity = quantity
+
+    @abstractmethod
+    def __str__(self):
+        """
+        Строковое представление продукта
+        """
+        pass
+
+    @property
+    @abstractmethod
+    def price(self):
+        """
+        Геттер для получения цены продукта
+        """
+        pass
+
+    @price.setter
+    @abstractmethod
+    def price(self, value):
+        """
+        Сеттер для установки цены продукта
+        """
+        pass
+
+    @abstractmethod
+    def __add__(self, other):
+        """
+        Метод для сложения продуктов (расчет общей стоимости)
+        """
+        pass
+
+    @classmethod
+    @abstractmethod
+    def new_product(cls, params: dict, products: list = None):
+        """
+        Создает новый экземпляр продукта из словаря параметров
+        """
+        pass
+
+class Product(CreationLoggerMixin, BaseProduct):
+    def __init__(self, name: str, description: str, price: float, quantity: int, *args, **kwargs) -> None:
         """
         Инициализация объекта Product
 
@@ -9,6 +97,7 @@ class Product:
         :param price: цена товара (с копейками)
         :param quantity: количество товара в наличии (в штуках)
         """
+        super().__init__(name=name, description=description, price=price, quantity=quantity, *args, **kwargs)
         self.name = name
         self.description = description
         self.__price = price
@@ -23,7 +112,7 @@ class Product:
         Создает новый экземпляр Product из словаря параметров.
         Если товар с таким же именем уже существует, обновляет его количество и выбирает максимальную цену.
 
-        :param params: словарь с параметрами товара (name, description, price, quantity)
+        :param params: Словарь с параметрами товара (name, description, price, quantity)
         :param products: список товаров, в которых нужно искать дубликаты (по имени)
         :return: новый или обновленный экземпляр Product
         """
@@ -62,13 +151,9 @@ class Product:
             raise TypeError(f"Нельзя складывать товары разных типов: {type(self).__name__} и {type(other).__name__}")
         return self.price * self.quantity + other.price * other.quantity
 
-    @classmethod
-    def get_products_string(cls, search_str: object, params: object) -> None:
-        pass
-
 
 class Smartphone(Product):
-    def __init__(self, name: str, description: str, price: float, quantity: int, 
+    def __init__(self, name: str, description: str, price: float, quantity: int,
                  efficiency: float, model: str, memory: int, color: str):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
@@ -78,7 +163,7 @@ class Smartphone(Product):
 
 
 class LawnGrass(Product):
-    def __init__(self, name: str, description: str, price: float, quantity: int, 
+    def __init__(self, name: str, description: str, price: float, quantity: int,
                  country: str, germination_period: str, color: str):
         super().__init__(name, description, price, quantity)
         self.country = country
