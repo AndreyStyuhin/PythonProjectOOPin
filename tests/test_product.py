@@ -1,6 +1,5 @@
-# test_product.py
 import unittest
-from src.product import Product, Smartphone, LawnGrass
+from src.product import Product, Smartphone, LawnGrass, CreationLoggerMixin
 from src.category import Category
 
 
@@ -75,3 +74,28 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(lawngrass.country, "Россия")
         self.assertEqual(lawngrass.germination_period, "7 дней")
         self.assertEqual(lawngrass.color, "Зеленый")
+
+    def test_BaseProduct_str(self):
+        product = Product("Test Product", "Test Description", 100, 10)
+        expected_str = "Test Product, 100 руб. Остаток: 10 шт."
+        self.assertEqual(str(product), expected_str)
+
+    def test_BaseProduct_str_with_zero_price(self):
+            product = Product("Test Product", "Test Description", 0, 10)
+            expected_str = "Test Product, 0 руб. Остаток: 10 шт."
+            self.assertEqual(str(product), expected_str)
+
+    def test_BaseProduct_str_with_zero_quantity(self):
+        product = Product("Test Product", "Test Description", 100, 0)
+        expected_str = "Test Product, 100 руб. Остаток: 0 шт."
+        self.assertEqual(str(product), expected_str)
+
+    def test_BaseProduct_str_with_negative_price(self):
+            product = Product("Test Product", "Test Description", -100, 10)
+            expected_str = "Test Product, -100 руб. Остаток: 10 шт."
+            self.assertEqual(str(product), expected_str)
+
+    def test_CreationLoggerMixin_log_info(self):
+        logger = CreationLoggerMixin()
+        result = logger.log_info("Test message")
+        self.assertEqual(result, "Test message")

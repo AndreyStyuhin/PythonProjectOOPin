@@ -1,6 +1,4 @@
-
 from src.product import Product
-
 
 class Category:
     # Атрибуты класса для хранения общей информации
