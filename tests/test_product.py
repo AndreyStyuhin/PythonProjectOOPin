@@ -1,4 +1,6 @@
 import unittest
+import io
+from unittest.mock import patch
 from src.product import Product, Smartphone, LawnGrass, CreationLoggerMixin
 from src.category import Category
 
@@ -86,9 +88,10 @@ class TestProduct(unittest.TestCase):
             self.assertEqual(str(product), expected_str)
 
     def test_BaseProduct_str_with_zero_quantity(self):
-        product = Product("Test Product", "Test Description", 100, 0)
-        expected_str = "Test Product, 100 руб. Остаток: 0 шт."
-        self.assertEqual(str(product), expected_str)
+        with self.assertRaises(ValueError):
+            product = Product("Test Product", "Test Description", 100, 0)
+            expected_str = "Test Product, 100 руб. Остаток: 0 шт."
+            self.assertEqual(str(product), expected_str)
 
     def test_BaseProduct_str_with_negative_price(self):
             product = Product("Test Product", "Test Description", -100, 10)
@@ -99,3 +102,19 @@ class TestProduct(unittest.TestCase):
         logger = CreationLoggerMixin()
         result = logger.log_info("Test message")
         self.assertEqual(result, "Test message")
+
+    def test_mixin_out(self):
+        """Тест для проверки вывода миксина в консоль."""
+        with patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+            # Создаем объект с миксином
+            product = Product("Test Product", "Test Description", 100.0, 10)
+
+            # Получаем весь вывод
+            output = mock_stdout.getvalue()
+
+            # Проверяем наличие ключевых элементов в выводе
+            self.assertIn("Создан объект класса Product", output)
+            self.assertIn("Test Product", output)
+            self.assertIn("Test Description", output)
+            self.assertIn("Позиционные аргументы:", output)
+            self.assertIn("Именованные аргументы:", output)

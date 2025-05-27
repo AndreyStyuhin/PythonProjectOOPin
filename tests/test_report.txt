@@ -1,15 +1,22 @@
 
 === Отчет о прохождении тестов ===
-Дата и время: 2025-05-20 17:50:20
+Дата и время: 2025-05-27 13:04:29
 
-Всего тестов: 14
-Успешно: 14
-Ошибок: 0
+Всего тестов: 20
+Успешно: 19
+Ошибок: 1
 Неудач: 0
 
 === Детали ===
+test_BaseProduct_str (tests.test_product.TestProduct.test_BaseProduct_str) ... ok
+test_BaseProduct_str_with_negative_price (tests.test_product.TestProduct.test_BaseProduct_str_with_negative_price) ... ok
+test_BaseProduct_str_with_zero_price (tests.test_product.TestProduct.test_BaseProduct_str_with_zero_price) ... ok
+test_BaseProduct_str_with_zero_quantity (tests.test_product.TestProduct.test_BaseProduct_str_with_zero_quantity) ... ERROR
+test_CreationLoggerMixin_log_info (tests.test_product.TestProduct.test_CreationLoggerMixin_log_info) ... ok
 test_create_lawngrass (tests.test_product.TestProduct.test_create_lawngrass) ... ok
 test_create_smartphone (tests.test_product.TestProduct.test_create_smartphone) ... ok
+test_mixin_out (tests.test_product.TestProduct.test_mixin_out)
+Тест для проверки вывода миксина в консоль. ... ok
 test_new_product (tests.test_product.TestProduct.test_new_product) ... ok
 test_product_initialization (tests.test_product.TestProduct.test_product_initialization) ... ok
 test_product_str (tests.test_product.TestProduct.test_product_str) ... ok
@@ -23,8 +30,18 @@ test_product_count (tests.test_category.TestCategory.test_product_count) ... ok
 test_products_info (tests.test_category.TestCategory.test_products_info) ... ok
 test_products_info_empty (tests.test_category.TestCategory.test_products_info_empty) ... ok
 
+======================================================================
+ERROR: test_BaseProduct_str_with_zero_quantity (tests.test_product.TestProduct.test_BaseProduct_str_with_zero_quantity)
 ----------------------------------------------------------------------
-Ran 14 tests in 0.001s
+Traceback (most recent call last):
+  File "/home/stayer/PycharmProjects/PythonProjectOOPin/tests/test_product.py", line 91, in test_BaseProduct_str_with_zero_quantity
+    product = Product("Test Product", "Test Description", 100, 0)
+  File "/home/stayer/PycharmProjects/PythonProjectOOPin/src/product.py", line 102, in __init__
+    raise ValueError("Товар с нулевым количеством не может быть добавлен.")
+ValueError: Товар с нулевым количеством не может быть добавлен.
 
-OK
+----------------------------------------------------------------------
+Ran 20 tests in 0.003s
+
+FAILED (errors=1)
 
