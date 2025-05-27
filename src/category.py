@@ -53,7 +53,8 @@ class Category:
         """
         if not isinstance(product, Product):
             raise TypeError("В категорию можно добавлять только объекты класса Product или его наследников")
-
+        if product.quantity <= 0:
+            raise ZeroQuantityError()
         self.__products.append(product)
         Category.product_count += 1
 
@@ -78,3 +79,9 @@ class Category:
             return average_price
         except ZeroDivisionError:
             return 0
+
+class ZeroQuantityError(Exception):
+    """Исключение, возникающее, когда добавляется товар с нулевым количеством"""
+    def __init__(self, message="Нельзя добавить товар с нулевым количеством"):
+        self.message = message
+        super().__init__(self.message)

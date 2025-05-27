@@ -88,9 +88,10 @@ class TestProduct(unittest.TestCase):
             self.assertEqual(str(product), expected_str)
 
     def test_BaseProduct_str_with_zero_quantity(self):
-        product = Product("Test Product", "Test Description", 100, 0)
-        expected_str = "Test Product, 100 руб. Остаток: 0 шт."
-        self.assertEqual(str(product), expected_str)
+        with self.assertRaises(ValueError):
+            product = Product("Test Product", "Test Description", 100, 0)
+            expected_str = "Test Product, 100 руб. Остаток: 0 шт."
+            self.assertEqual(str(product), expected_str)
 
     def test_BaseProduct_str_with_negative_price(self):
             product = Product("Test Product", "Test Description", -100, 10)

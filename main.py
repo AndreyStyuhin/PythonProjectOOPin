@@ -1,6 +1,5 @@
 from src.product import Product
-from src.category import Category
-
+from src.category import Category, ZeroQuantityError
 
 if __name__ == '__main__':
     try:
@@ -21,3 +20,14 @@ if __name__ == '__main__':
 
     category_empty = Category("Пустая категория", "Категория без продуктов", [])
     print(category_empty.middle_price())
+
+try:
+    category1 = Category("Электроника", "Техника для дома")
+    product1 = Product("Телефон", "Смартфон", 10000, 10) #quantity = 0
+    category1.add_product(product1)
+except ZeroQuantityError as e:
+    print(f"Ошибка: {e}")
+else:
+    print("Товар успешно добавлен в категорию.")
+finally:
+    print("Обработка ошибок завершена.")
