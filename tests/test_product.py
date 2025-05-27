@@ -118,3 +118,21 @@ class TestProduct(unittest.TestCase):
             self.assertIn("Test Description", output)
             self.assertIn("Позиционные аргументы:", output)
             self.assertIn("Именованные аргументы:", output)
+
+    def test_product_addition(self):
+        product1 = Product("Product 1", "Desc 1", 100, 2)
+        product2 = Product("Product 2", "Desc 2", 200, 3)
+        self.assertEqual(product1 + product2, 100 * 2 + 200 * 3)
+
+    def test_product_addition_different_types(self):
+        product = Product("Product", "Desc", 100, 1)
+        smartphone: Smartphone = Smartphone("Smart", "Desc", 200, 1, 95.5, "Model", 256, "Black")
+        with self.assertRaises(TypeError):
+            product + smartphone
+
+    def test_remove_product(self):
+        product = Product("Product", "Desc", 100, 1)
+        category = Category("Category", "Desc", [product])
+        category.remove_product(product)
+        self.assertNotIn(product, category.products)
+        self.assertEqual(Category.product_count, 0)
