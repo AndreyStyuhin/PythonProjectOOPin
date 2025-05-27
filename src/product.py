@@ -96,7 +96,10 @@ class Product(CreationLoggerMixin, BaseProduct):
         :param description: описание товара
         :param price: цена товара (с копейками)
         :param quantity: количество товара в наличии (в штуках)
+        :raises ValueError: если количество товара равно нулю
         """
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен.")
         super().__init__(name=name, description=description, price=price, quantity=quantity, *args, **kwargs)
         self.name = name
         self.description = description
@@ -169,3 +172,12 @@ class LawnGrass(Product):
         self.country = country
         self.germination_period = germination_period
         self.color = color
+
+def __init__(self, name: str, description: str, price: float, quantity: int, *args, **kwargs) -> None:
+    if quantity <= 0:
+        raise ValueError("Товар с нулевым количеством не может быть добавлен.")
+    super().__init__(name=name, description=description, price=price, quantity=quantity, *args, **kwargs)
+    self.name = name
+    self.description = description
+    self.__price = price
+    self.quantity = quantity

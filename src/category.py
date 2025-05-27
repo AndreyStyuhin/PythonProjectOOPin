@@ -65,3 +65,16 @@ class Category:
         if product in self.__products:
             self.__products.remove(product)
             Category.product_count -= 1
+
+    def middle_price(self) -> float:
+        """
+        Рассчитывает средний ценник всех товаров в категории.
+        Если товаров нет, возвращает 0.
+        :return: Средняя цена товаров в категории или 0, если товаров нет.
+        """
+        try:
+            total_price = sum(product.price for product in self.__products)
+            average_price = total_price / len(self.__products)
+            return average_price
+        except ZeroDivisionError:
+            return 0
